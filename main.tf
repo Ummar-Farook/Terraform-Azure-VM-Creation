@@ -33,7 +33,7 @@ resource "azurerm_subnet" "petclinic" {
   name                 = "petclinic-public"
   resource_group_name  = "${azurerm_resource_group.petclinic.name}"
   virtual_network_name = "${azurerm_virtual_network.petclinic.name}"
-  address_prefix       = 172.20.10.0/24"
+  address_prefix       = "172.20.10.0/24"
 }
 
 
