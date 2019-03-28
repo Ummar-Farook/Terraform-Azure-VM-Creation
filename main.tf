@@ -29,7 +29,7 @@ resource "azurerm_virtual_network" "petclinic" {
 }
 
 
-resource "azurerm_subnet" "petclinic" {
+resource "azurerm_subnet" "petclinic-public" {
   name                 = "petclinic-public"
   resource_group_name  = "${azurerm_resource_group.petclinic.name}"
   virtual_network_name = "${azurerm_virtual_network.petclinic.name}"
@@ -38,7 +38,7 @@ resource "azurerm_subnet" "petclinic" {
 
 
 
-resource "azurerm_subnet" "petclinic" {
+resource "azurerm_subnet" "petclinic-private" {
   name                 = "petclinic-private"
   resource_group_name  = "${azurerm_resource_group.petclinic.name}"
   virtual_network_name = "${azurerm_virtual_network.petclinic.name}"
@@ -52,7 +52,7 @@ resource "azurerm_network_interface" "petclinicprivateip" {
 
   ip_configuration {
     name                          = "petclinic"
-    subnet_id                     = "${azurerm_subnet.petclinic.id}"
+    subnet_id                     = "${azurerm_subnet.petclinic-private.id}"
     private_ip_address_allocation = "Dynamic"
   }
 }
@@ -64,7 +64,7 @@ resource "azurerm_network_interface" "petclinicpublicip" {
 
   ip_configuration {
     name                          = "petclinic"
-    subnet_id                     = "${azurerm_subnet.petclinic.id}"
+    subnet_id                     = "${azurerm_subnet.petclinic-public.id}"
     private_ip_address_allocation = "Static"
     private_ip_address            = "10.10.2.5"
     public_ip_address_id          = "${azurerm_public_ip.petclinic.id}"
